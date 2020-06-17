@@ -117,7 +117,8 @@ pipeline {
                 echo 'Running tests on the integration test environment'
                 script {
                     sh """
-                       curl -v http://localhost:4000 | grep '<title>Welcome to example-webapp</title>'
+		       HOST=`hostname`
+                       curl -v http://${HOST}:4000 | grep '<title>Welcome to example-webapp</title>'
                        if [ \$? -eq 0 ]
                        then
                            echo tests pass
