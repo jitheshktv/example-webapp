@@ -73,10 +73,10 @@ pipeline {
                     productionImage.push("deploy")
                     sh """
                        #aws ec2 reboot-instances --region us-east-1 --instance-ids i-0e438e2bf64427c9d
-			cat << EOF > start-website
-			docker login -u jithu -p jithu myregistry.domain.com
-			sudo docker run -p 3000:3000 ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:release
-			EOF
+			#cat << EOF > start-website
+			echo 'docker login -u jithu -p jithu myregistry.domain.com' > start-website
+			echo 'sudo docker run -p 3000:3000 ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:release' >> start-website
+			#EOF
 			echo 'Created the executable file'
 			echo '=========================='
 			cat start-website
