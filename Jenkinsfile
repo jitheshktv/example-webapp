@@ -99,9 +99,9 @@ pipeline {
                 echo 'Deploy to test environment and run integration tests'
                 script {
                     //TEST_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/testing-website/3a4d20158ad2c734/49cb56d533c1772b"
-                    #sh """
-                    #./run-stack.sh example-webapp-test ${TEST_ALB_LISTENER_ARN}
-                    #"""
+                    //sh """
+                    //./run-stack.sh example-webapp-test ${TEST_ALB_LISTENER_ARN}
+                    //"""
 
                     sh """
                         echo 'docker login -u jithu -p jithu myregistry.domain.com' > start-website-int
