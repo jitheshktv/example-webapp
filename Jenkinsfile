@@ -93,20 +93,31 @@ pipeline {
 
         stage('Integration Tests') {
             when {
-                branch 'master-1'
+                branch 'master'
             }
             steps {
                 echo 'Deploy to test environment and run integration tests'
                 script {
-                    TEST_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/testing-website/3a4d20158ad2c734/49cb56d533c1772b"
+                    #TEST_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/testing-website/3a4d20158ad2c734/49cb56d533c1772b"
+                    #sh """
+                    #./run-stack.sh example-webapp-test ${TEST_ALB_LISTENER_ARN}
+                    #"""
+
                     sh """
-                    ./run-stack.sh example-webapp-test ${TEST_ALB_LISTENER_ARN}
+                        echo 'docker login -u jithu -p jithu myregistry.domain.com' > start-website-int
+                        echo 'sudo docker rm my-website-int --force' >> start-website-int
+                        echo 'sudo docker run -d --rm -p 5000:5000 --name my-website-int ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:master' >> start-website-int
+                        
+			sudo mv start-website-int /var/lib/cloud/scripts/per-boot/start-website-int
+                        sudo chmod +x /var/lib/cloud/scripts/per-boot/start-website-int
+                        /var/lib/cloud/scripts/per-boot/start-website-int
                     """
+
                 }
                 echo 'Running tests on the integration test environment'
                 script {
                     sh """
-                       curl -v http://testing-website-1317230480.us-east-1.elb.amazonaws.com | grep '<title>Welcome to example-webapp</title>'
+                       curl -v http://localhost:5000 | grep '<title>Welcome to example-webapp</title>'
                        if [ \$? -eq 0 ]
                        then
                            echo tests pass
@@ -122,14 +133,24 @@ pipeline {
  
         stage('Deploy to Production') {
             when {
-                branch 'master-1'
+                branch 'master'
             }
             steps {
                 script {
-                    PRODUCTION_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/production-website/a0459c11ab5707ca/5d21528a13519da6"
+                    productionImage.push("prod")
                     sh """
-                    ./run-stack.sh example-webapp-production ${PRODUCTION_ALB_LISTENER_ARN}
+                        echo 'docker login -u jithu -p jithu myregistry.domain.com' > start-website-prod
+                        echo 'sudo docker rm my-website-prod --force' >> start-website-prod
+                        echo 'sudo docker run -d --rm -p 3000:3000 --name my-website-prod ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:prod' >> start-website-prod
+                        sudo mv start-website /var/lib/cloud/scripts/per-boot/start-website-prod
+                        sudo chmod +x /var/lib/cloud/scripts/per-boot/start-website-prod
+                        /var/lib/cloud/scripts/per-boot/start-website-prod
                     """
+ 
+                   #PRODUCTION_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/production-website/a0459c11ab5707ca/5d21528a13519da6"
+                    #sh """
+                    #./run-stack.sh example-webapp-production ${PRODUCTION_ALB_LISTENER_ARN}
+                    #"""
                 }
             }
         }
