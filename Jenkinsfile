@@ -117,7 +117,8 @@ pipeline {
                 echo 'Running tests on the integration test environment'
                 script {
                     sh """
-		       curl -v http://0.0.0.0:4000 | grep '<title>Welcome to example-webapp</title>'
+			hostname
+		       curl -Lv http://0.0.0.0:4000 | grep '<title>Welcome to example-webapp</title>'
 		       echo "===="
 		       hostname"
                        echo "===="
