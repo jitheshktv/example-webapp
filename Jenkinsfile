@@ -98,7 +98,7 @@ pipeline {
             steps {
                 echo 'Deploy to test environment and run integration tests'
                 script {
-                    #TEST_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/testing-website/3a4d20158ad2c734/49cb56d533c1772b"
+                    //TEST_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/testing-website/3a4d20158ad2c734/49cb56d533c1772b"
                     #sh """
                     #./run-stack.sh example-webapp-test ${TEST_ALB_LISTENER_ARN}
                     #"""
@@ -147,10 +147,10 @@ pipeline {
                         /var/lib/cloud/scripts/per-boot/start-website-prod
                     """
  
-                   #PRODUCTION_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/production-website/a0459c11ab5707ca/5d21528a13519da6"
-                    #sh """
-                    #./run-stack.sh example-webapp-production ${PRODUCTION_ALB_LISTENER_ARN}
-                    #"""
+                   //PRODUCTION_ALB_LISTENER_ARN="arn:aws:elasticloadbalancing:us-east-1:089778365617:listener/app/production-website/a0459c11ab5707ca/5d21528a13519da6"
+                    //sh """
+                    //./run-stack.sh example-webapp-production ${PRODUCTION_ALB_LISTENER_ARN}
+                    //"""
                 }
             }
         }
