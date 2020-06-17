@@ -144,7 +144,7 @@ pipeline {
                         echo 'docker login -u jithu -p jithu myregistry.domain.com' > start-website-prod
                         echo 'sudo docker rm my-website-prod --force' >> start-website-prod
                         echo 'sudo docker run -d --rm -p 5000:3000 --name my-website-prod ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:prod' >> start-website-prod
-                        sudo mv start-website /var/lib/cloud/scripts/per-boot/start-website-prod
+                        sudo mv start-website-prod /var/lib/cloud/scripts/per-boot/start-website-prod
                         sudo chmod +x /var/lib/cloud/scripts/per-boot/start-website-prod
                         /var/lib/cloud/scripts/per-boot/start-website-prod
                     """
