@@ -106,7 +106,7 @@ pipeline {
                     sh """
                         echo 'docker login -u jithu -p jithu myregistry.domain.com' > start-website-int
                         echo 'sudo docker rm my-website-int --force' >> start-website-int
-                        echo 'sudo docker run -d --rm -p 5000:5000 --name my-website-int ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:master' >> start-website-int
+                        echo 'sudo docker run -d --rm -p 4000:3000 --name my-website-int ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:master' >> start-website-int
                         
 			sudo mv start-website-int /var/lib/cloud/scripts/per-boot/start-website-int
                         sudo chmod +x /var/lib/cloud/scripts/per-boot/start-website-int
@@ -141,7 +141,7 @@ pipeline {
                     sh """
                         echo 'docker login -u jithu -p jithu myregistry.domain.com' > start-website-prod
                         echo 'sudo docker rm my-website-prod --force' >> start-website-prod
-                        echo 'sudo docker run -d --rm -p 3000:3000 --name my-website-prod ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:prod' >> start-website-prod
+                        echo 'sudo docker run -d --rm -p 5000:3000 --name my-website-prod ${ACCOUNT_REGISTRY_PREFIX}/example-webapp:prod' >> start-website-prod
                         sudo mv start-website /var/lib/cloud/scripts/per-boot/start-website-prod
                         sudo chmod +x /var/lib/cloud/scripts/per-boot/start-website-prod
                         /var/lib/cloud/scripts/per-boot/start-website-prod
